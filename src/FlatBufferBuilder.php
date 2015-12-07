@@ -17,7 +17,7 @@
 
 namespace FlatBuffers;
 
-class FlatBufferBuilder
+class FlatBufferBuilder implements Constants
 {
     /**
      * @var ByteBuffer $bb
@@ -535,12 +535,12 @@ class FlatBufferBuilder
      */
     public function addOffset($off)
     {
-        $this->prep(Constants::SIZEOF_INT, 0); // Ensure alignment is already done
+        $this->prep(self::SIZEOF_INT, 0); // Ensure alignment is already done
         if ($off > $this->offset()) {
             throw new \Exception("");
         }
 
-        $off = $this->offset() - $off + Constants::SIZEOF_INT;
+        $off = $this->offset() - $off + self::SIZEOF_INT;
         $this->putInt($off);
     }
 
@@ -554,7 +554,7 @@ class FlatBufferBuilder
     {
         $this->notNested();
         $this->vector_num_elems = $num_elems;
-        $this->prep(Constants::SIZEOF_INT, $elem_size * $num_elems);
+        $this->prep(self::SIZEOF_INT, $elem_size * $num_elems);
         $this->prep($alignment, $elem_size * $num_elems); // Just in case alignemnt > int;
     }
 
@@ -788,7 +788,7 @@ class FlatBufferBuilder
 
         $standard_fields = 2; // the fields below
         $this->addShort($vtableloc - $this->object_start);
-        $this->addShort(($this->vtable_in_use + $standard_fields) * Constants::SIZEOF_SHORT);
+        $this->addShort(($this->vtable_in_use + $standard_fields) * self::SIZEOF_SHORT);
 
         // search for an existing vtable that matches the current one.
         $existing_vtable = 0;
@@ -800,7 +800,7 @@ class FlatBufferBuilder
             $len = $this->bb->getShort($vt1);
 
             if ($len == $this->bb->getShort($vt2)) {
-                for ($j = Constants::SIZEOF_SHORT; $j < $len; $j += Constants::SIZEOF_SHORT) {
+                for ($j = self::SIZEOF_SHORT; $j < $len; $j += self::SIZEOF_SHORT) {
                     if ($this->bb->getShort($vt1 + $j) != $this->bb->getShort($vt2 + $j)) {
                         continue 2;
                     }
@@ -858,18 +858,19 @@ class FlatBufferBuilder
     public function finish($root_table, $identifier = null)
     {
         if ($identifier == null) {
-            $this->prep($this->minalign, Constants::SIZEOF_INT);
+            $this->prep($this->minalign, self::SIZEOF_INT);
             $this->addOffset($root_table);
             $this->bb->setPosition($this->space);
         } else {
-            $this->prep($this->minalign, Constants::SIZEOF_INT + Constants::FILE_IDENTIFIER_LENGTH);
-            if (strlen($identifier) != Constants::FILE_IDENTIFIER_LENGTH) {
+            $this->prep($this->minalign, self::SIZEOF_INT + self::FILE_IDENTIFIER_LENGTH);
+            if (strlen($identifier) != self::FILE_IDENTIFIER_LENGTH) {
                 throw new \InvalidArgumentException(
                     sprintf("FlatBuffers: file identifier must be length %d",
-                        Constants::FILE_IDENTIFIER_LENGTH));
+                    self::FILE_IDENTIFIER_LENGTH)
+                );
             }
 
-            for ($i = Constants::FILE_IDENTIFIER_LENGTH - 1; $i >= 0;
+            for ($i = self::FILE_IDENTIFIER_LENGTH - 1; $i >= 0;
                   $i--) {
                 $this->addByte(ord($identifier[$i]));
             }

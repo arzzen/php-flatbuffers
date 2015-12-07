@@ -17,7 +17,7 @@
 
 namespace FlatBuffers;
 
-abstract class Table
+abstract class Table implements Constants
 {
     /**
      * @var int $bb_pos
@@ -63,7 +63,7 @@ abstract class Table
     {
         $offset += $this->bb->getInt($offset);
         $len = $this->bb->getInt($offset);
-        $startPos = $offset + Constants::SIZEOF_INT;
+        $startPos = $offset + self::SIZEOF_INT;
         return substr($this->bb->_buffer, $startPos, $len);
     }
 
@@ -86,7 +86,7 @@ abstract class Table
     {
         $offset += $this->bb_pos;
         // data starts after the length
-        return $offset + $this->bb->getInt($offset) + Constants::SIZEOF_INT;
+        return $offset + $this->bb->getInt($offset) + self::SIZEOF_INT;
     }
 
 //    protected function __vector_as_bytebuffer($vector_offset, $elem_size)
@@ -114,12 +114,12 @@ abstract class Table
      */
     protected static function __has_identifier($bb, $ident)
     {
-        if (strlen($ident) != Constants::FILE_IDENTIFIER_LENGTH) {
-            throw new \ArgumentException("FlatBuffers: file identifier must be length "  . Constants::FILE_IDENTIFIER_LENGTH);
+        if (strlen($ident) != self::FILE_IDENTIFIER_LENGTH) {
+            throw new \ArgumentException("FlatBuffers: file identifier must be length "  . self::FILE_IDENTIFIER_LENGTH);
         }
 
         for ($i = 0; $i < 4; $i++) {
-            if ($ident[$i] != $bb->get($bb->getPosition() + Constants::SIZEOF_INT + $i)) {
+            if ($ident[$i] != $bb->get($bb->getPosition() + self::SIZEOF_INT + $i)) {
                 return false;
             }
         }

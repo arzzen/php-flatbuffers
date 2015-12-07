@@ -15,11 +15,20 @@
  * limitations under the License.
  */
 
-namespace FlatBuffers;
+namespace FlatBuffers; 
 
-class Constants
+interface Constants
 {
-    const SIZEOF_SHORT = 2;
+	const SIZEOF_SHORT = 2;
     const SIZEOF_INT = 4;
     const FILE_IDENTIFIER_LENGTH = 4;
+    
+    const SBYTE = 127;
+    const BYTE = 255;
+    const SHORT = 32767;
+    const USHORT = 65535;
+    const INT = 2147483647;
+    const UINT = 4294967295;
+    const LONG = 9223372036854775807;
+    const ULONG = 18446744073709551615;
 }
