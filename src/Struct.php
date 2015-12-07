@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-namespace Google\FlatBuffers;
+namespace FlatBuffers;
 
 abstract class Struct
 {

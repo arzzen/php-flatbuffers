@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-namespace Google\FlatBuffers;
+namespace FlatBuffers;
 
-class FlatbufferBuilder
+class FlatBufferBuilder
 {
     /**
      * @var ByteBuffer $bb
