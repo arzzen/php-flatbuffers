@@ -871,8 +871,7 @@ class FlatBufferBuilder implements Constants
                 );
             }
 
-            for ($i = self::FILE_IDENTIFIER_LENGTH - 1; $i >= 0;
-                  $i--) {
+            for ($i = self::FILE_IDENTIFIER_LENGTH - 1; $i >= 0; $i--) {
                 $this->addByte(ord($identifier[$i]));
             }
             $this->finish($root_table);
