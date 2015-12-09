@@ -282,7 +282,7 @@ class ByteBuffer implements Constants
     public function putUlong($offset, $value)
     {
         // NOTE: We can't put big integer value. this is PHP limitation (in 32bit systems).
-        $ulong = ((PHP_INT_SIZE === 8) ? self::ULONG : PHP_INT_MAX);
+        $ulong = ((self::INT == PHP_INT_MAX) ? PHP_INT_MAX : self::ULONG);
         self::validateValue(0, $ulong, $value, "long", " php has big numbers limitation. check your PHP_INT_MAX");
 
         $this->assertOffsetAndLength($offset, 8);

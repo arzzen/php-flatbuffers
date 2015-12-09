@@ -685,7 +685,8 @@ class FlatBufferBuilder implements Constants
         $this->addByte(0); // null terminated
         $this->startVector(1, strlen($s), 1);
         $this->space -= strlen($s);
-        for ($i =  $this->space, $j = 0 ; $j < strlen($s) ; $i++, $j++) {
+
+        for ($i = $this->space, $j = 0 ; $j < strlen($s) ; $i++, $j++) {
             $this->bb->_buffer[$i] = $s[$j];
         }
         return $this->endVector();

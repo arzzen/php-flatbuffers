@@ -28,6 +28,7 @@ abstract class Table implements Constants
      */
     protected $bb;
 
+
     public function __construct()
     {
     }
