@@ -48,11 +48,6 @@ class StringWrapper extends Table implements Constants
 		$this->fbb->addOffsetX($slot, $str, 0);
 	}
 	
-	/**
-     * @param FlatBufferBuilder $builder
-     * @param array offset array
-     * @return int vector offset
-     */
     public function createArrayOfStringVector(array $data)
     {
         $this->fbb->startVector(4, count($data), 4);
