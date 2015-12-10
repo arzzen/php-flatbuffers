@@ -104,13 +104,13 @@ $firstText = $stringWrapper->createString('first_value');
 $secondText = $stringWrapper->createString('second_value');
 
 $stringWrapper->startObject(25);
-	$stringWrapper->addString(2, $firstText);
-	$stringWrapper->addString(3, $secondText);
+$stringWrapper->addString(2, $firstText);
+$stringWrapper->addString(3, $secondText);
 $stringWrapper->finish($stringWrapper->endObject());
 
 $stringWrapper->init($stringWrapper->dataBuffer());
 
-$this->assertEquals('first_value', $stringWrapper->getString(2));
-$this->assertEquals('second_value', $stringWrapper->getString(3));
+echo $stringWrapper->getString(2);
+echo $stringWrapper->getString(3);
 
 ```
