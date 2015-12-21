@@ -49,7 +49,7 @@ class StringWrapper extends Table implements Constants
 	}
 	
 	public function getString($slot = 0)
-    {
+    	{
 		$vtable_offset = self::SIZEOF_INT + ($slot * 2); 
 		
 		$vtable = $this->bb_pos - $this->bb->getInt($this->bb_pos);
@@ -62,7 +62,7 @@ class StringWrapper extends Table implements Constants
 		$_string = substr($this->bb->_buffer, $startPos, $len);
 
 		return ($offset != 0 ? $_string : null);
-    }
+    	}
 	
 	public function createString($value)
 	{
@@ -100,6 +100,7 @@ class StringWrapper extends Table implements Constants
 $flatBufferBuilder = new FlatBufferBuilder(1);
 $stringWrapper = new StringWrapper($flatBufferBuilder);
 
+// set string
 $firstText = $stringWrapper->createString('first_value');
 $secondText = $stringWrapper->createString('second_value');
 
@@ -108,6 +109,7 @@ $stringWrapper->addString(2, $firstText);
 $stringWrapper->addString(3, $secondText);
 $stringWrapper->finish($stringWrapper->endObject());
 
+// get string
 $stringWrapper->init($stringWrapper->dataBuffer());
 
 echo $stringWrapper->getString(2);
