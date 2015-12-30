@@ -49,7 +49,7 @@ class StringWrapper extends Table implements Constants
 	}
 	
 	public function getString($slot = 0)
-    	{
+	{
 		$vtable_offset = self::SIZEOF_INT + ($slot * 2); 
 		
 		$vtable = $this->bb_pos - $this->bb->getInt($this->bb_pos);
@@ -62,7 +62,7 @@ class StringWrapper extends Table implements Constants
 		$_string = substr($this->bb->_buffer, $startPos, $len);
 
 		return ($offset != 0 ? $_string : null);
-    	}
+	}
 	
 	public function createString($value)
 	{
