@@ -225,7 +225,7 @@ class FlatBufferBuilder implements Constants
     public function putUint($x)
     {
         if ($x > PHP_INT_MAX) {
-            throw new \InvalidArgumentException("your platform can't handling uint correctly. use 64bit machine.");
+            throw new \InvalidArgumentException("your platform can't handle uint correctly. use 64bit machine.");
         }
 
         $this->bb->putUint($this->space -= 4, $x);
@@ -237,7 +237,7 @@ class FlatBufferBuilder implements Constants
     public function putLong($x)
     {
         if ($x > PHP_INT_MAX) {
-            throw new \InvalidArgumentException("your platform can't handling long correctly. use 64bit machine.");
+            throw new \InvalidArgumentException("your platform can't handle long correctly. use 64bit machine.");
         }
 
         $this->bb->putLong($this->space -= 8, $x);
@@ -249,7 +249,7 @@ class FlatBufferBuilder implements Constants
     public function putUlong($x)
     {
         if ($x > PHP_INT_MAX) {
-            throw new \InvalidArgumentException("your platform can't handling ulong correctly. this is php limitations. please wait extension release.");
+            throw new \InvalidArgumentException("your platform can't handle ulong correctly. this is php limitations. please wait extension release.");
         }
 
         $this->bb->putUlong($this->space -= 8, $x);
