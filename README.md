@@ -1,6 +1,5 @@
 ### PHP [Memory Efficient Serialization Library](https://github.com/google/flatbuffers)
-[![Build Status](https://travis-ci.org/arzzen/php-flatbuffers
-.svg)](https://travis-ci.org/arzzen/php-flatbuffers)
+[![Build Status](https://travis-ci.org/arzzen/php-flatbuffers.svg)](https://travis-ci.org/arzzen/php-flatbuffers)
 
 FlatBuffers is a serialization library for games and other memory constrained apps. 
 
