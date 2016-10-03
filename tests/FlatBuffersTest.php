@@ -14,7 +14,13 @@ class StringWrapper extends Table implements Constants
 		$this->fbb = $flatBufferBuilder;
 	}
 
-	public function init(ByteBuffer $byteBuffer)
+    public function tearDown()
+    {
+        Mockery::close();
+    }
+
+
+    public function init(ByteBuffer $byteBuffer)
 	{
 		$this->bb = $byteBuffer;
 		$this->bb_pos = $this->bb->getInt($this->bb->getPosition()) + $this->bb->getPosition();
@@ -114,51 +120,52 @@ class FlatBuffersTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($flatBufferBuilder->bb->_buffer, $stringWrapper->dataBuffer()->data());
 	}
 
-	public function lessThanOneDataProvider()
-	{
-		return [
-			[0],
-			[-1],
-			[-1000]
-		];
-	}
+    public function lessThanOneDataProvider()
+    {
+        return [
+            [0],
+            [-1],
+            [-1000]
+        ];
+    }
 
-	/**
-	 * @dataProvider lessThanOneDataProvider
-	 * @param $value
-	 */
-	public function testInitialSizeDefaultsToOneWhenLessThanOne($value)
-	{
-		$flatBufferBuilder = new FlatBufferBuilder($value);
-		$this->assertAttributeEquals(1, 'space', $flatBufferBuilder);
-	}
-
-	/**
-	 * @runInSeparateProcess
-	 * @preserveGlobalState disabled
-	 */
-	public function testPrepThrowsExceptionWhenBufferGrowsBeyond2GB()
-	{
-		$this->setExpectedException(\Exception::class, "FlatBuffers: cannot grow buffer beyond 2 gigabytes");
-
-		$byteBuffer = Mockery::mock('overload:' . ByteBuffer::class);
-		$byteBuffer->shouldReceive('capacity')
-			->andReturn((float)2e+9);
-
-		$flatBufferBuilder = new FlatBufferBuilder(1);
-		$flatBufferBuilder->prep(1, 1);
-	}
+    /**
+     * @dataProvider lessThanOneDataProvider
+     * @param $value
+     */
+    public function testInitialSizeDefaultsToOneWhenLessThanOne($value)
+    {
+        $flatBufferBuilder = new FlatBufferBuilder($value);
+        $this->assertAttributeEquals(1, 'space', $flatBufferBuilder);
+    }
 
     /**
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function testPutBoolAddsBooleanToBuffer(){
-		$byteBuffer = Mockery::mock('overload:' . ByteBuffer::class);
-		$byteBuffer->shouldReceive('put')
-			->with(0, chr(1));
+    public function testPrepThrowsExceptionWhenBufferGrowsBeyond2GB()
+    {
+        $this->setExpectedException(\Exception::class, "FlatBuffers: cannot grow buffer beyond 2 gigabytes");
 
-		$flatBufferBuilder = new FlatBufferBuilder(1);
+        $byteBuffer = Mockery::mock('overload:' . ByteBuffer::class);
+        $byteBuffer->shouldReceive('capacity')
+            ->andReturn((float)2e+9);
+
+        $flatBufferBuilder = new FlatBufferBuilder(1);
+        $flatBufferBuilder->prep(1, 1);
+    }
+
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     */
+    public function testPutBoolAddsCharacterToBuffer()
+    {
+        $byteBuffer = Mockery::mock('overload:' . ByteBuffer::class);
+        $byteBuffer->shouldReceive('put')
+            ->with(0, chr(1));
+
+        $flatBufferBuilder = new FlatBufferBuilder(1);
         $flatBufferBuilder->putBool(true);
 
         $byteBuffer->shouldReceive('put')
@@ -166,6 +173,20 @@ class FlatBuffersTest extends PHPUnit_Framework_TestCase
 
         $flatBufferBuilder = new FlatBufferBuilder(1);
         $flatBufferBuilder->putBool(false);
-	}
+    }
+    
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     */
+    public function testPutSbyteAddsCharacterToBuffer()
+    {
+        $byteBuffer = Mockery::mock('overload:' . ByteBuffer::class);
+        $byteBuffer->shouldReceive('put')
+            ->with(0, chr(35));
+
+        $flatBufferBuilder = new FlatBufferBuilder(1);
+        $flatBufferBuilder->putSbyte(35);
+    }
 
 }
