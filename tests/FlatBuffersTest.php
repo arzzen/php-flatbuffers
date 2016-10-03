@@ -113,5 +113,40 @@ class FlatBuffersTest extends PHPUnit_Framework_TestCase
 		
 		$this->assertEquals($flatBufferBuilder->bb->_buffer, $stringWrapper->dataBuffer()->data());
 	}
+
+	public function lessThanOneDataProvider()
+	{
+		return [
+			[0],
+			[-1],
+			[-1000]
+		];
+	}
+
+	/**
+	 * @dataProvider lessThanOneDataProvider
+	 * @param $value
+	 */
+	public function testInitialSizeDefaultsToOneWhenLessThanOne($value)
+	{
+		$flatBufferBuilder = new FlatBufferBuilder($value);
+		$this->assertAttributeEquals(1, 'space', $flatBufferBuilder);
+	}
+	
+	/**
+	 * @runInSeparateProcess
+	 * @preserveGlobalState disabled
+	 */
+	public function testPrepThrowsExceptionWhenBufferGrowsBeyond2GB()
+	{
+		$this->setExpectedException(\Exception::class, "FlatBuffers: cannot grow buffer beyond 2 gigabytes");
+
+		$byteBuffer = Mockery::mock('overload:' . ByteBuffer::class);
+		$byteBuffer->shouldReceive('capacity')
+			->andReturn((float)2e+9);
+
+		$flatBufferBuilder = new FlatBufferBuilder(1);
+		$flatBufferBuilder->prep(1, 1);
+	}
 		
 }
