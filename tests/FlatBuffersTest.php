@@ -122,11 +122,11 @@ class FlatBuffersTest extends PHPUnit_Framework_TestCase
 
     public function lessThanOneDataProvider()
     {
-        return [
-            [0],
-            [-1],
-            [-1000]
-        ];
+        return array(
+            array(0),
+            array(-1),
+            array(-1000)
+        );
     }
 
     /**
