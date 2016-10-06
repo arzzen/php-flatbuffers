@@ -146,7 +146,7 @@ class FlatBuffersTest extends PHPUnit_Framework_TestCase
     {
         $this->setExpectedException('\Exception', "FlatBuffers: cannot grow buffer beyond 2 gigabytes");
 
-        $byteBuffer = Mockery::mock('overload:' . ByteBuffer::class);
+        $byteBuffer = Mockery::mock('overload: FlatBuffers\ByteBuffer');
         $byteBuffer->shouldReceive('capacity')
             ->andReturn((float)2e+9);
 
@@ -160,7 +160,7 @@ class FlatBuffersTest extends PHPUnit_Framework_TestCase
      */
     public function testPutBoolAddsCharacterToBuffer()
     {
-        $byteBuffer = Mockery::mock('overload:' . ByteBuffer::class);
+        $byteBuffer = Mockery::mock('overload: FlatBuffers\ByteBuffer');
         $byteBuffer->shouldReceive('put')
             ->with(0, chr(1));
 
@@ -180,7 +180,7 @@ class FlatBuffersTest extends PHPUnit_Framework_TestCase
      */
     public function testPutSbyteAddsCharacterToBuffer()
     {
-        $byteBuffer = Mockery::mock('overload:' . ByteBuffer::class);
+        $byteBuffer = Mockery::mock('overload: FlatBuffers\ByteBuffer');
         $byteBuffer->shouldReceive('put')
             ->with(0, chr(35));
 
