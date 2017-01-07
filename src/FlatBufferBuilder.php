@@ -225,7 +225,7 @@ class FlatBufferBuilder implements Constants
     public function putUint($x)
     {
         if ($x > PHP_INT_MAX) {
-            throw new \InvalidArgumentException("your platform can't handle uint correctly. use 64bit machine.");
+            throw new \InvalidArgumentException("your platform can't handle uint correctly. Use a 64bit machine.");
         }
 
         $this->bb->putUint($this->space -= 4, $x);
